@@ -7,6 +7,19 @@
     "test": "ava --tap | tnyan"
   },
   "devDependencies": {
-    "ava": "^0.18.2"
+    "ava": "^0.18.2",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-register": "^6.23.0",
+    "tap-nyan": "^1.1.0"
+  },
+  "ava": {
+    "babel": {
+      "presets": [
+        "@ava/stage-4"
+      ],
+      "plugins": [
+        "transform-object-rest-spread"
+      ]
+    }
   }
 }

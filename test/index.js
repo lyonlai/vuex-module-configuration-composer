@@ -9,6 +9,10 @@ import {
   normalisePath,
   generateVuexStoreModuleConfiguration
 } from '../index';
+import ctx from './helpers/index'
+import TabsModule from './helpers/modules/tabs/index';
+import AccountTabModule from './helpers/modules/tabs/account/index';
+import AccountBalanceTabModule from './helpers/modules/tabs/account/balance/index';
 
 test('normalisedPath should return the empty array on ./index.js', t => {
   t.deepEqual(
@@ -45,4 +49,29 @@ test('createModuleNamespace should return an object with expected values', t => 
       modules: {}
     }
   )
+});
+
+test('should have generated namespaced modules configuration for vuex store', t => {
+  const moduleConfigurations = generateVuexStoreModuleConfiguration(ctx);
+  t.deepEqual(moduleConfigurations, {
+    modules: {
+      tabs: {
+        ...TabsModule,
+        namespaced: true,
+        modules: {
+          account: {
+            namespaced: true,
+            modules: {
+              balance: {
+                namespaced: true,
+                modules: {},
+                ...AccountBalanceTabModule
+              }
+            },
+            ...AccountTabModule
+          }
+        }
+      }
+    }
+  });
 });

@@ -1,43 +1,47 @@
 var nodePath = require('path');
 
-module.exports.buildNestedModules = function (paths, currentModule, loadedModule) {
+function buildNestedModules(paths, currentModule, loadedModule) {
   var path = paths.shift();
-
   currentModule[path] = currentModule[path] || createModuleNamespace();
-
   if (paths.length <= 0) {
-    currentModule[path] = Object.assign(currentModule[path], loadedModule);
-    return
+    currentModule[path] = Object.assign({}, currentModule[path], loadedModule);
   } else {
     buildNestedModules(paths, currentModule[path].modules, loadedModule);
   }
 }
 
-module.exports.createModuleNamespace = function () {
+function createModuleNamespace() {
   return {
     namespaced: true,
     modules: {}
   }
 }
 
-module.exports.normalisePath = function (path, mainFileName) {
+function normalisePath(path, mainFileName) {
   var pathComponents = path.replace(mainFileName || 'index.js').split(nodePath.sep);
   pathComponents.shift();
   pathComponents.pop();
   return pathComponents;
 }
 
-module.exports.generateVuexStoreModuleConfiguration = function(ctx, mainFileName) {
+function generateVuexStoreModuleConfiguration(ctx, mainFileName) {
   var modules = {}
 
   ctx.keys()
-    .sort()
-    .map(key => normalisePath(key, mainFileName))
-    .forEach(normalisedPath =>
-      buildNestedModules(normalisedPath.split(nodePath.sep), modules, ctx(key).default)
-    );
+    .forEach(key => {
+      var normalisedPath = normalisePath(key, mainFileName);
+      buildNestedModules(normalisedPath, modules, ctx(key).default);
+    });
 
   return {
     modules: modules
   }
 }
+
+module.exports.buildNestedModules = buildNestedModules;
+
+module.exports.createModuleNamespace = createModuleNamespace;
+
+module.exports.normalisePath = normalisePath;
+
+module.exports.generateVuexStoreModuleConfiguration = generateVuexStoreModuleConfiguration;
