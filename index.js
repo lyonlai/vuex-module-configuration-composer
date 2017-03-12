@@ -16,7 +16,7 @@ module.exports.buildNestedModules = function (paths, currentModule, loadedModule
 module.exports.createModuleNamespace = function () {
   return {
     namespaced: true,
-    module: {}
+    modules: {}
   }
 }
 

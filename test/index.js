@@ -36,3 +36,13 @@ test('normalisedPath should return array of directorys separated by path sep', t
     ['tabs', 'store', 'product']
   );
 });
+
+test('createModuleNamespace should return an object with expected values', t => {
+  t.deepEqual(
+    createModuleNamespace(),
+    {
+      namespaced: true,
+      modules: {}
+    }
+  )
+});
