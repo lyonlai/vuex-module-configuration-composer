@@ -20,21 +20,21 @@ module.exports.createModuleNamespace = function () {
   }
 }
 
-module.exports.normalisePath = function (path) {
-  var pathComponents = path.split(nodePath.sep).;
+module.exports.normalisePath = function (path, mainFileName) {
+  var pathComponents = path.replace(mainFileName || 'index.js').split(nodePath.sep);
   pathComponents.shift();
   pathComponents.pop();
   return pathComponents;
 }
 
-module.exports.generateVuexStoreModuleConfiguration = function(ctx) {
+module.exports.generateVuexStoreModuleConfiguration = function(ctx, mainFileName) {
   var modules = {}
 
   ctx.keys()
     .sort()
-    .map(normalisePath)
+    .map(key => normalisePath(key, mainFileName))
     .forEach(normalisedPath =>
-      buildNestedModules(normalisedKey.split('/'), modules, ctx(key).default)
+      buildNestedModules(normalisedPath.split(nodePath.sep), modules, ctx(key).default)
     );
 
   return {
