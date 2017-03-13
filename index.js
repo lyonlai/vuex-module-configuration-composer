@@ -24,13 +24,16 @@ function normalisePath(path, mainFileName) {
   return pathComponents;
 }
 
-function generateVuexStoreModuleConfiguration(ctx, mainFileName) {
+function generateVuexStoreModuleConfiguration(ctx, mainFileName, fetchContext) {
   var modules = {}
+  fetchContext = fetchContext || function (key) {
+    return ctx(key).default
+  }
 
   ctx.keys()
     .forEach(key => {
       var normalisedPath = normalisePath(key, mainFileName);
-      buildNestedModules(normalisedPath, modules, ctx(key).default);
+      buildNestedModules(normalisedPath, modules, fetchContext(key));
     });
 
   return {
