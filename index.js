@@ -19,26 +19,22 @@ function createModuleNamespace() {
 
 function normalisePath(path, mainFileName) {
   var pathComponents = path.replace(mainFileName || 'index.js').split(nodePath.sep);
-  pathComponents.shift();
-  pathComponents.pop();
-  return pathComponents;
+  return pathComponents.slice(1, pathComponents.length - 1);
 }
 
-function generateVuexStoreModuleConfiguration(ctx, mainFileName, fetchContext) {
-  var modules = {}
-  fetchContext = fetchContext || function (key) {
-    return ctx(key).default
-  }
+function fetchModuleFromContext(ctx, key) {
+  return ctx(key).default
+}
 
-  ctx.keys()
-    .forEach(key => {
-      var normalisedPath = normalisePath(key, mainFileName);
-      buildNestedModules(normalisedPath, modules, fetchContext(key));
-    });
-
+function generateVuexStoreModuleConfiguration(ctx, mainFileName, fetchModule) {
   return {
-    modules: modules
-  }
+    modules: ctx.keys()
+      .reduce(function (modules, key) {
+        var normalisedPath = normalisePath(key, mainFileName);
+        buildNestedModules(normalisedPath, modules, (fetchModule || fetchModuleFromContext)(ctx, key));
+        return modules;
+      }, {})
+  };
 }
 
 module.exports.buildNestedModules = buildNestedModules;
