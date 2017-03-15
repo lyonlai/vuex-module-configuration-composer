@@ -1,0 +1,6 @@
+{
+  "generator-vuex": {
+    "storeDirectory": "store",
+    "modulesDirectory": "modules"
+  }
+}

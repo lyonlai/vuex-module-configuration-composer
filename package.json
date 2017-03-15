@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "pretest": "cd webpack; yarn install && ./node_modules/.bin/webpack && cd -",
     "test": "ava --tap | tnyan",
     "posttest": "nyc report --reporter=text --reporter=html ava"
   },
@@ -12,7 +13,9 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-register": "^6.23.0",
     "nyc": "^10.1.2",
-    "tap-nyan": "^1.1.0"
+    "tap-nyan": "^1.1.0",
+    "vue": "^2.2.4",
+    "vuex": "^2.2.1"
   },
   "ava": {
     "babel": {
