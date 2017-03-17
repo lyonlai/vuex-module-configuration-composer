@@ -2,7 +2,7 @@
 
 This modules is used to generate namespaced modules configuration for Vuex Store from a Webpack require context.
 
-This module is created to ease the pain of manually creating modules configuration in complex application. With this module in place, you can achieve create the module then be able to use it straight away in your component.
+This module is created to ease the pain of manually creating Vuex store modules configuration in complex application. With this module in place, you can achieve create the module then be able to use it straight away in your component.
 
 ## Example
 
