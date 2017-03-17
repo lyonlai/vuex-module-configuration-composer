@@ -1,4 +1,5 @@
 # Vuex Module Configuration Composer
+[![Build Status](https://travis-ci.org/lyonlai/vuex-module-configuration-composer.svg?branch=master)](https://travis-ci.org/lyonlai/vuex-module-configuration-composer) [![Coverage Status](https://coveralls.io/repos/github/lyonlai/vuex-module-configuration-composer/badge.svg?branch=master)](https://coveralls.io/github/lyonlai/vuex-module-configuration-composer?branch=master)
 
 This modules is used to generate namespaced modules configuration for Vuex Store from a Webpack require context.
 

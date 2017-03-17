@@ -5,23 +5,23 @@
   "license": "MIT",
   "scripts": {
     "pretest": "cd webpack; yarn install && ./node_modules/.bin/webpack && cd -",
-    "test": "ava --tap | tnyan",
-    "posttest": "nyc report --reporter=text --reporter=html ava"
+    "test": "nyc ava --tap | tnyan",
+    "posttest": "nyc report --reporter=text --reporter=html"
   },
   "devDependencies": {
     "ava": "^0.18.2",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-register": "^6.23.0",
+    "coveralls": "^2.12.0",
     "nyc": "^10.1.2",
     "tap-nyan": "^1.1.0",
     "vue": "^2.2.4",
     "vuex": "^2.2.1"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/lyonlai/vuex-module-configuration-composer.git"
+    "type": "git",
+    "url": "https://github.com/lyonlai/vuex-module-configuration-composer.git"
   },
-  "license": "MIT",
   "ava": {
     "babel": {
       "presets": [
@@ -31,5 +31,11 @@
         "transform-object-rest-spread"
       ]
     }
+  },
+  "nyc": {
+    "exclude": [
+      "webpack/**/*.js",
+      "test/**/*.js"
+    ]
   }
 }
